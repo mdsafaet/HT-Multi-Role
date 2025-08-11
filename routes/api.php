@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ProjectController;
 
 
 Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
@@ -18,3 +21,9 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 Route::post('/register', [AuthController::class,'register']);
 Route::put('/update/{id}', [AuthController::class,'update']);
 Route::delete('/delete/{id}', [AuthController::class,'destroy']);
+
+
+
+Route::apiResource('task', TaskController::class);
+Route::apiResource('tag', TagController::class);
+Route::apiResource('project', ProjectController::class);

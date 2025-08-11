@@ -6,6 +6,7 @@ use App\Http\Requests\UserRegisterRequest;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserUpdateRegister;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -35,7 +36,7 @@ class AuthController extends Controller
         return $this->success($token);
     }
 
-    public function update(UserRegisterRequest $request, $id  )
+    public function update(UserUpdateRegister $request, $id  )
     {
       $user = User::find($id);
 
