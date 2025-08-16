@@ -25,7 +25,9 @@ class ProjectRegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'user_id' => 'nullable|exists:users,id', // Optional, but if provided must exist in users table
+            'user_id' => 'nullable|exists:users,id',
+            
+             
         ];
     }
 

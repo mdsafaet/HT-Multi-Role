@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('project_tag', function (Blueprint $table) {
             $table->id();
-           $table->foreignId('project_id')->constrained()->onDelete('cascade'); // Foreign key for the projects table
-            $table->foreignId('tag_id')->constrained()->onDelete('cascade'); // Foreign key for the tags table
+           $table->foreignId('project_id')->constrained('products')->onDelete('cascade'); // Foreign key for the projects table
+            $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade'); // Foreign key for the tags table
 
             $table->timestamps();
         });

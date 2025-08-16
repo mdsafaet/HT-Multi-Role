@@ -25,31 +25,38 @@ class ProjectController extends Controller
             return $this->success('All Project', $project);
         }
 
+
+
+
+
         return $this->error();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectRegisterRequest $request)
+    public function store(ProjectRegisterRequest $request  )
     {
+
+
         $data = $request->validated();
 
+        // dd($request->all());
+
+        $project = Project::create( $data );
+        // ([
+        //     'name' => $data['name'],
+        //     'user_id' => $data['user_id']
+
+        // ]);
+
       
-
-        $project = Project::create([
-            'name' => $data['name'],
-            'user_id' => $data['user_id']
-        ]);
-            
+         $project->tags()->attach($request->tags);
+           
+          
     
 
-        
-
-
-        return $this->success($project);
-        
-    
+        return $this->success($project->load('tags'));
     }
 
     /**
