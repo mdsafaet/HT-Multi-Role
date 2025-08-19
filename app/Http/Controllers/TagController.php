@@ -6,12 +6,13 @@ use App\Http\Requests\TagRegisterRequest;
 use App\Models\Tag;
 use App\Trait\TraitsApiResponseTrait;
 use App\Traits\ApiResponseTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
 
-    use ApiResponseTrait;
+    use ApiResponseTrait,AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -25,6 +26,8 @@ class TagController extends Controller
      */
     public function store(TagRegisterRequest $request)
     {
+
+        $this->authorize("create", Tag::class);
          $data = $request->validated();
 
        
@@ -64,6 +67,8 @@ class TagController extends Controller
         if (!$tag) {
             return $this->error('Tag not found', 404);
         }
+
+        $this->authorize('update', $tag);
 
         if ($tag->delete()) {
             return $this->success('Tag deleted successfully');

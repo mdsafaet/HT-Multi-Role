@@ -7,17 +7,21 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Trait\TraitsApiResponseTrait;
 use App\Traits\ApiResponseTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
 
-    use ApiResponseTrait;
+    use ApiResponseTrait,AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
+
     {
+          $this->authorize('viewAny', Task::class);
+
          $tasks = Task::all();
 
 
@@ -33,6 +37,9 @@ class TaskController extends Controller
      */
     public function store(TaskRegisterRequest $request)
     {
+
+          $this->authorize('create', Task::class);
+
          $data = $request->validated();
 
         // Ensure project exists before creating the task
@@ -72,6 +79,8 @@ class TaskController extends Controller
             return $this->error('Task not found', 404);
         }
 
+           $this->authorize('update', $task);
+
         $updated = $task->update($request->validated());
 
         if ($updated) {
@@ -92,6 +101,7 @@ class TaskController extends Controller
         if (!$task) {
             return $this->error('Task not found', 404);
         }
+         $this->authorize('delete', $task);
 
         if ($task->delete()) {
             return $this->success('Task deleted successfully');

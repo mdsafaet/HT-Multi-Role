@@ -15,6 +15,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('login',[AuthController::class,'login']);
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
+     Route::post('me', [AuthController::class,'me']);
 
 
 });
@@ -23,13 +24,13 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
 
 
-Route::middleware(['role:admin,user' ,'auth:api'])->group(function ($router) {
+Route::middleware(['role:admin,user,super admin' ,'auth:api'])->group(function ($router) {
 
 
 Route::put('/update/{id}', [AuthController::class,'update']);
 Route::delete('/delete/{id}', [AuthController::class,'destroy']);
 
-  Route::post('me', [AuthController::class,'me']);
+ 
 
   Route::apiResource('project', ProjectController::class);
 

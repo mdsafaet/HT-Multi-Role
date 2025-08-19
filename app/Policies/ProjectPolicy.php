@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Traits\ApiResponseTrait;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 
@@ -16,7 +17,8 @@ class ProjectPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->role->name === 'super admin'
+        || $user->role->name === 'admin';
     }
 
     /**
@@ -43,8 +45,8 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-          return $user->role->name === 'SuperAdmin' 
-            || $user->role->name === 'Admin' 
+          return $user->role->name === 'super admin' 
+            || $user->role->name === 'admin' 
             || $project->user_id === $user->id;
     }
 
@@ -53,8 +55,8 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
-         return $user->role->name === 'SuperAdmin' 
-            || $user->role->name === 'Admin' 
+         return $user->role->name === 'super admin' 
+            || $user->role->name === 'admin' 
             || $project->user_id === $user->id;
     }
 

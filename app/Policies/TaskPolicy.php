@@ -24,8 +24,8 @@ class TaskPolicy
      */
     public function view(User $user, Task $task): bool
     {
-        return $user->role->name === 'SuperAdmin' 
-            || $user->role->name === 'Admin' 
+        return $user->role->name === 'super admin' 
+            || $user->role->name === 'admin' 
             || $task->user_id === $user->id;
     }
 
@@ -42,8 +42,8 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-           return $user->role->name === 'SuperAdmin' 
-            || $user->role->name === 'Admin' 
+           return $user->role->name === 'super admin' 
+            || $user->role->name === 'admin' 
             || $task->user_id === $user->id;
     }
 
@@ -52,8 +52,8 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        return $user->role->name === 'SuperAdmin' 
-            || $user->role->name === 'Admin' 
+        return $user->role->name === 'super admin' 
+            || $user->role->name === 'admin' 
             || $task->user_id === $user->id;
          
     }

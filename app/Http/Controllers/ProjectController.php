@@ -7,16 +7,21 @@ use App\Models\Project;
 use App\Trait\TraitsApiResponseTrait;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class ProjectController extends Controller
 {
 
-     use ApiResponseTrait;
+     use ApiResponseTrait , AuthorizesRequests ;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
+         $this->authorize('viewAny', Project::class);
+         
         $project = Project::all();
 
       
@@ -38,12 +43,16 @@ class ProjectController extends Controller
     public function store(ProjectRegisterRequest $request  )
     {
 
-
+      $this->authorize('create', Project::class);
+     
         $data = $request->validated();
 
         // dd($request->all());
 
         $project = Project::create( $data );
+
+
+          $this->authorize('view', $project);
         // ([
         //     'name' => $data['name'],
         //     'user_id' => $data['user_id']
@@ -79,6 +88,7 @@ class ProjectController extends Controller
                 if (!$project) {
                     return $this->error('Project not found', 404);
                 }
+                 $this->authorize('update', $project);
 
                 $updated = $project->update($request->validated());
 
@@ -99,6 +109,8 @@ class ProjectController extends Controller
         if (!$project) {
             return $this->error('Project not found', 404);
         }
+
+        $this->authorize('delete', $project);
     
 
         if ($project->delete()) {
