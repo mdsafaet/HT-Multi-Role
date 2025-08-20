@@ -31,7 +31,7 @@ class TagPolicy
     {
         return 
             $user->role->name === 'super admin'
-            || $user->role->name === 'admin'
+            || $user->role->name === 'admin';
            // || $user->role->name === 'user';
     }
 
