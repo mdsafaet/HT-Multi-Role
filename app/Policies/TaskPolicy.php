@@ -26,7 +26,8 @@ class TaskPolicy
     {
         return $user->role->name === 'super admin' 
             || $user->role->name === 'admin' 
-            || $task->user_id === $user->id;
+            // || $task->user_id === $user->id;
+             || ($task->project && $task->project->user_id === $user->id);
     }
 
     /**
@@ -44,7 +45,8 @@ class TaskPolicy
     {
            return $user->role->name === 'super admin' 
             || $user->role->name === 'admin' 
-            || $task->user_id === $user->id;
+            // || $task->user_id === $user->id;
+                 || ($task->project && $task->project->user_id === $user->id);
     }
 
     /**
@@ -54,7 +56,8 @@ class TaskPolicy
     {
         return $user->role->name === 'super admin' 
             || $user->role->name === 'admin' 
-            || $task->user_id === $user->id;
+            // || $task->user_id === $user->id;
+             || ($task->project && $task->project->user_id === $user->id);
          
     }
 
